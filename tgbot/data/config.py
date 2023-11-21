@@ -1,9 +1,6 @@
 from dataclasses import dataclass
 from environs import Env
 
-from misc.project_path import get_project_path
-
-
 @dataclass
 class Tgbot:
     token: str
@@ -39,7 +36,7 @@ class Config:
 
 def get_config() -> Config:
     env = Env()
-    path = get_project_path()+'\\tgbot\\.env'
+    path = './tgbot/.env'
     env.read_env(path)
 
     return Config(

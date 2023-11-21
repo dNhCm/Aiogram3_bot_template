@@ -3,7 +3,7 @@ import os
 
 from aiogram import Router
 
-from misc.project_path import get_project_path
+from misc.root import get_root
 from .middlewares import register_middlewares
 from .handlers import register_handlers
 from .errors import register_errors
@@ -24,7 +24,7 @@ def get_router() -> Router:
         routers = os.listdir("\\".join(path))
 
         for module in routers:
-            import_get_router = importlib.import_module(f".{module}", package=".".join(path[len(get_project_path()):])).get_router
+            import_get_router = importlib.import_module(f".{module}", package=".".join(path[len(get_root()):])).get_router
             router.include_router(import_get_router())
     except (FileNotFoundError, TypeError):
         pass
