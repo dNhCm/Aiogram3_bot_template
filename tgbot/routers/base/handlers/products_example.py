@@ -3,7 +3,7 @@ from typing import Any
 from aiogram import Router
 
 from tgbot.misc.handlers.custom_callback_query_handler import CustomCallbackQueryHandler
-from tgbot.routers.some_base.scripts.some_callbackquery_feedback import feedback
+from tgbot.routers.base.scripts.callbackquery_feedback_example import feedback
 from tgbot.utils.callback_datas.shop import Product
 
 

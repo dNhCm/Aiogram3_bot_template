@@ -18,6 +18,10 @@ async def register_my_commands(bot: Bot):
                 description="Starts quick quiz"
             ),
             BotCommand(
+                command="web_app",
+                description="Gives you keyboard to open web app"
+            ),
+            BotCommand(
                 command="audio",
                 description="Get some audio"
             ),
