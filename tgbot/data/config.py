@@ -1,10 +1,15 @@
+from configparser import ConfigParser
 from dataclasses import dataclass
 from environs import Env
+
+from misc.root import get_root
+
 
 @dataclass
 class Tgbot:
     token: str
     admins: list[int]
+    web_apps: dict[str, dict[str, str]]
     use_redis: bool
 
 
@@ -39,10 +44,18 @@ def get_config() -> Config:
     path = './tgbot/.env'
     env.read_env(path)
 
+    config = ConfigParser()
+    config.read(get_root() + '/tgbot/data/web_apps.ini')
+
     return Config(
         tgbot=Tgbot(
             token=env.str("TOKEN"),
             admins=list(map(int, env.str("ADMINS").split(' '))),
+            web_apps={
+                section.lower(): {option: config.get(section, option)}
+                for section in config.sections()
+                for option in config.options(section)
+            },
             use_redis=env.bool("USE_REDIS"),
         ),
         redis=Redis(
