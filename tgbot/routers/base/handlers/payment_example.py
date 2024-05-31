@@ -7,6 +7,7 @@ from aiogram.types import LabeledPrice, Message
 
 from tgbot.data.config import get_config
 from tgbot.keyboards.payments.some_payment_inlinekeyboard import payment_keyboard
+from tgbot.utils.multilingualism.langs import get_text
 from tgbot.utils.shipping.options import UA_SHIPPING, RO_SHIPPING, BG_SHIPPING, FAST_SHIPPING, UA_NOVAPOSHTA_SHIPPING, \
     RO_NOVAPOSHTA_SHIPPING
 
@@ -103,10 +104,11 @@ class PreCheckout(PreCheckoutQueryHandler):
 
 
 async def successful_payment(message: Message):
-    text = f'Thanks you, {message.from_user.first_name}, for purchasing our product from us worth {message.successful_payment.total_amount} {message.successful_payment.currency}!\n' \
-           f'We hope you will leave a review and like the good!\n' \
-           f'Good luck!!!'
-    await message.answer(text=text)
+    await message.answer(text=get_text(message.from_user.language_code, "successful_payment").format(
+        first_name=message.from_user.first_name,
+        total_amount=message.successful_payment.total_amount,
+        currency=message.successful_payment.currency
+    ))
 
 
 def register(router: Router):

@@ -8,7 +8,7 @@ from misc.logger import logger
 
 class Users:
     _db: Connection
-    name = "./tgbot/models/users.dp"
+    name = "./tgbot/models/users.db"
 
     @classmethod
     async def get_table(cls):

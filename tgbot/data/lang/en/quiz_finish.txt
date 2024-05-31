@@ -1,0 +1,3 @@
+{full_name}, your answers:
+Your age is {old}
+Do you like Aiogram 3? - {like_aiogram}

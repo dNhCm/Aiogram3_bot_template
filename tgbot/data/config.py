@@ -1,3 +1,4 @@
+import os
 from configparser import ConfigParser
 from dataclasses import dataclass
 from environs import Env
@@ -9,7 +10,9 @@ from misc.root import get_root
 class Tgbot:
     token: str
     admins: list[int]
+    default_lang_code: str
     web_apps: dict[str, dict[str, str]]
+    langs: dict[str, dict[str, str]]
     use_redis: bool
 
 
@@ -51,10 +54,18 @@ def get_config() -> Config:
         tgbot=Tgbot(
             token=env.str("TOKEN"),
             admins=list(map(int, env.str("ADMINS").split(' '))),
+            default_lang_code=env.str("DEFAULT_LANG_CODE"),
             web_apps={
                 section.lower(): {option: config.get(section, option)}
                 for section in config.sections()
                 for option in config.options(section)
+            },
+            langs={
+                lang: {
+                    text[:-4]: open(get_root() + f'/tgbot/data/lang/{lang}/{text}', 'r', encoding="UTF-8").read()
+                    for text in os.listdir(get_root() + '/tgbot/data/lang/' + lang)
+                }
+                for lang in os.listdir(get_root() + '/tgbot/data/lang')
             },
             use_redis=env.bool("USE_REDIS"),
         ),

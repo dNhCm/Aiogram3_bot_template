@@ -1,0 +1,3 @@
+Thanks you, {first_name}, for purchasing our product from us worth {total_amount} {currency}!
+We hope you will leave a review and like the good!
+Good luck!!!

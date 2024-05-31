@@ -10,6 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from tgbot.keyboards.forms.some_quiz_agreement_replykeyboard import quiz_agreement_keyboard
 from tgbot.misc.handlers.custom_message_handler import CustomMessageHandler
+from tgbot.utils.multilingualism.langs import get_text
 from tgbot.utils.states.quiz import QuizForm
 
 
@@ -65,10 +66,11 @@ async def unknown_like_aiogram3(message: Message, state: FSMContext):
 
 async def finish(message: Message, state: FSMContext):
     context_data = await state.get_data()
-    text = f"{message.from_user.full_name}, your answers:\r\n" \
-           f"Your age is {context_data['old']}\r\n" \
-           f"Do you like Aiogram 3? - {context_data['like_aiogram']}"
-    await message.answer(text=text)
+    await message.answer(text=get_text(message.from_user.language_code, "quiz_finish").format(
+        full_name=message.from_user.full_name,
+        old=context_data['old'],
+        like_aiogram=context_data['like_aiogram']
+    ))
     await state.clear()
 
 
