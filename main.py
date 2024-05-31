@@ -1,7 +1,7 @@
 import asyncio
 from asyncio import CancelledError
 
-from bot import main as tgbot_main
+from tgbot.bot import main as tgbot_main
 from misc.logger import logger
 
 
